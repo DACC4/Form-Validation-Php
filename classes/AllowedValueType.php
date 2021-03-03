@@ -5,5 +5,6 @@
         const List = 1;
         const Regex = 2;
         const Array = 3;
+        const SQL = 4;
     }
 ?>

@@ -1,4 +1,7 @@
-
+$(document).ready(function() {
+    $('#form-validation-success').addClass('fv-d-none');
+    $('#form-validation-error').addClass('fv-d-none');
+});
 
 function validateForm(event, form) {
     event.preventDefault();
@@ -7,16 +10,19 @@ function validateForm(event, form) {
 
     console.log(formValues);
 
-    switch ($(form).attr('method')) {
+    switch ($(form).attr('method').toLowerCase()) {
         case 'get':
             $.get($(form).attr('action'), formValues, function (data) {
                 var json = JSON.parse(data);
         
                 console.log(json);
         
+                $('#form-validation-success').addClass('fv-d-none');
+                $('#form-validation-error').addClass('fv-d-none');
+
                 if (json.result) {
-                    alert('IOUPY');
-                    return true;
+                    $('.input-error').removeClass('input-error');
+                    $('#form-validation-success').removeClass('fv-d-none');
                 } else {
                     $('.input-error').removeClass('input-error');
                     for (const property in json.errors) {
@@ -24,8 +30,8 @@ function validateForm(event, form) {
         
                         $(field).addClass('input-error');
                     }
+                    $('#form-validation-error').removeClass('fv-d-none');
                 }
-                return false;
             });
             break;
 
@@ -35,9 +41,12 @@ function validateForm(event, form) {
         
                 console.log(json);
         
+                $('#form-validation-success').addClass('fv-d-none');
+                $('#form-validation-error').addClass('fv-d-none');
+
                 if (json.result) {
-                    alert('IOUPY');
-                    return true;
+                    $('.input-error').removeClass('input-error');
+                    $('#form-validation-success').removeClass('fv-d-none');
                 } else {
                     $('.input-error').removeClass('input-error');
                     for (const property in json.errors) {
@@ -45,8 +54,8 @@ function validateForm(event, form) {
         
                         $(field).addClass('input-error');
                     }
+                    $('#form-validation-error').removeClass('fv-d-none');
                 }
-                return false;
             });
             break;
     

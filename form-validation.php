@@ -41,6 +41,7 @@
     
     require(getRelativePath($url, $dir. '/lib/form-validation/classes/AllowedValueType.php'));
     require(getRelativePath($url, $dir. '/lib/form-validation/classes/FormSubmitMethod.php'));
+    require(getRelativePath($url, $dir. '/lib/form-validation/.env.php'));
     require(getRelativePath($url, $dir. '/lib/form-validation/classes/FormParam.php'));
     require(getRelativePath($url, $dir. '/lib/form-validation/classes/Form.php'));
     require(getRelativePath($url, $dir. '/lib/form-validation/classes/FormValidator.php'));

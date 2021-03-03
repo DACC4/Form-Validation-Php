@@ -1,4 +1,4 @@
-# Form-validation-php
+# Form-validation
 
 # How to use it
 
@@ -24,6 +24,19 @@ Code example :
 
     <input type="text" class="form-control" id="rolNom-error" name="rolNom">
 
+### Display result
+You can create two divs to display the result of the form, one for success and one for error. They must have `form-validation-success` and `form-validation-error` as their id respectively. Example : 
+
+```
+<div id="form-validation-success">
+    <div class="alert alert-success">Role saved</div>
+</div>
+
+<div id="form-validation-error">
+    <div class="alert alert-danger">Error while saving role</div>
+</div>
+```
+
 ## PHP
 
 Create a new instance of the `FormValidator` class with two parameters :
@@ -34,32 +47,69 @@ Create a new instance of the `FormValidator` class with two parameters :
  - The second one is the array of `FormParam` passed as a variadic param. Here's an example : 
  ```
  ...array(
-	new  FormParam(
-		name: 'rolNom',
-		method: FormSubmitMethod::POST,
-		mandatory: true,
-		allowedValueType: AllowedValueType::Regex,
-		allowedValues: '/^.+/'
-	),
-	new  FormParam(
-		name: 'permissions',
-		method: FormSubmitMethod::POST,
-		mandatory: true,
-		allowedValueType: AllowedValueType::Array
-	),
-	new  FormParam(
-		name: 'idRole',
-		method: FormSubmitMethod::GET,
-		mandatory: false,
-		allowedValueType: AllowedValueType::Regex,
-		allowedValues: '/^\d+/'
-	)
+    new  FormParam(
+        name: 'rolNom',
+        method: FormSubmitMethod::POST,
+        mandatory: true,
+        allowedValueType: AllowedValueType::Regex,
+        allowedValues: '/^.+/'
+    ),
+    new  FormParam(
+        name: 'permissions',
+        method: FormSubmitMethod::POST,
+        mandatory: true,
+        allowedValueType: AllowedValueType::Array
+    ),
+    new FormParam(
+        name: 'idRole',
+        method: FormSubmitMethod::GET,
+        mandatory: false,
+        allowedValueType: AllowedValueType::SQL,
+        allowedValues: '1',
+        sqlQuery: 'SELECT COUNT(*) FROM t_role WHERE idRole = :value'
+    )
 )
 ```
 
+## Classes
+
+### FormParam
+The `FormParam` class constructor params are the following :
+ - `name` [`string`]: The name of the parameter in get or post
+ - `method` [`FormSubmitMethod`] : The submit method of the parameter (for example `POST`)
+ - `mandatory` [`bool`]: Is the parameter mandatory or not
+ - `conditionalMandatory` [`FormParam`]: [WIP] A parameter which if is in the form then is mandatory otherwise not mandatory
+ - `allowedValueType` [`AllowedValueType`]: Allowed value type 
+ - `allowedValues` [`string|array`]: All the allowed values, string or array depending on `allowedValueType`
+ - `sqlQuery` [`string`]: SQL query to check param in DB, only used if `allowedValueType` is SQL. The query **must** only return **one** row and **one** column
+
+### AllowedValueType
+The following values exists :
+ - `All` : All values are allowed (default)
+ - `List` : Only a list of values are allowed (give array in `allowedValues`)
+ - `Regex` : Match a regex (give regex in `allowedValues`)
+ - `Array` : The value must an array, can be empty but must be an array
+ - `SQL` : Check in database (give the query in `sqlQuery`)
+
+
+### FormSubmitMethod
+The following values exists :
+ - `GET`
+ - `POST`
+
+
+### Env file
+The `.env.php` file is used to set the credentials for the database in the case where SQL `AllowedValueType` is used.
+
+ - `sqlHost` : Hostname or ip address of the database server
+ - `sqlDatabase` : Name of the database
+ - `sqlUser` : Username of the user used to connect to database
+ - `sqlPassword` : Password of the user used to connect to database
+
+
 ## Example
 
-Here's a full code example :
+Here's a full php code example :
 ```
 $formValidator = new  FormValidator(
 	new  Form(get: $_GET, post: $_POST),
@@ -77,13 +127,14 @@ $formValidator = new  FormValidator(
 			mandatory: true,
 			allowedValueType: AllowedValueType::Array
 		),
-		new  FormParam(
-			name: 'idRole',
-			method: FormSubmitMethod::GET,
-			mandatory: false,
-			allowedValueType: AllowedValueType::Regex,
-			allowedValues: '/^\d+/'
-		)
+		new FormParam(
+            name: 'idRole',
+            method: FormSubmitMethod::GET,
+            mandatory: false,
+            allowedValueType: AllowedValueType::SQL,
+            allowedValues: '1',
+            sqlQuery: 'SELECT COUNT(*) FROM t_role WHERE idRole = :value'
+        )
 	)
 );
 

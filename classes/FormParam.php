@@ -9,14 +9,16 @@
 
         public int $allowedValueType = AllowedValueType::All;
         public $allowedValues = '';
+        public $sqlQuery = '';
 
-        public function __construct(String $name, int $method, Bool $mandatory, ?FormParam $conditionalMandatory = null, int $allowedValueType = AllowedValueType::All, $allowedValues = ''){
+        public function __construct(String $name, int $method, Bool $mandatory, ?FormParam $conditionalMandatory = null, int $allowedValueType = AllowedValueType::All, $allowedValues = '', $sqlQuery = ''){
             $this->name = $name;
             $this->method = $method;
             $this->mandatory = $mandatory;
             $this->conditionalMandatory = $conditionalMandatory;
             $this->allowedValueType = $allowedValueType;
             $this->allowedValues = $allowedValues;
+            $this->sqlQuery = $sqlQuery;
         }
     }
 ?>

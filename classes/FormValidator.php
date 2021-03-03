@@ -58,6 +58,44 @@
 
                         break;
 
+                    case AllowedValueType::SQL:
+                        //Create SQL connection
+                        $sql = new PDO('mysql:host='.sqlHost.';dbname='.sqlDatabase.';charset=UTF8', sqlUser, sqlPassword);
+
+                        //Execute query
+                        $query = $sql->prepare($param->sqlQuery);
+                        if (str_contains($param->sqlQuery, ':value')) {
+                            $query->bindValue('value', $param->allowedValues);
+                        }
+                        $query->execute();
+                        $results = $query->fetchAll(PDO::FETCH_NUM);
+                        $query->closeCursor();
+
+                        //Check rows count
+                        if (count($results) != 1) {
+                            $this->errorsArray[$param->name] = "[SQL] Too many rows returned, please get only one";
+                            break;
+                        }
+
+                        //Get row
+                        $row = $results[0];
+
+                        //Check columns count
+                        if (count($row) != 1) {
+                            $this->errorsArray[$param->name] = "[SQL] Too many columns returned, please get only one";
+                            break;
+                        }
+
+                        //Get value
+                        $value = $row[0];
+
+                        //Check value
+                        if ($param->allowedValues != $value) {
+                            $this->errorsArray[$param->name] = "value not allowed";
+                        }
+
+                        break;
+
                     case AllowedValueType::All:
                         //All values are allowed
                         break;
