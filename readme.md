@@ -1,4 +1,4 @@
-# Form-validation
+# Form-validation-php
 
 # How to use it
 
