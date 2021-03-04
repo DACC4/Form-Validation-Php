@@ -25,7 +25,7 @@ function work(data, callback){
             $(field).addClass('input-error');
         }
 
-        if (json.displayError != '' && initialErrorMessage == '') {
+        if (initialErrorMessage == '') {
             initialErrorMessage = $('#form-validation-error').html();
         }
 
