@@ -123,6 +123,14 @@
             ));
         }
 
+        public function addError(string $name, string $error){
+            //Add error
+            $this->errorsArray[$name] = $error;
+
+            //Redefine result
+            $this->validated = empty($this->errorsArray);
+        }
+
         function getArray(int $type) : array{
             switch ($type) {
                 case FormSubmitMethod::GET:
