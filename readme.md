@@ -14,15 +14,24 @@ Add an include or require statement in the `header` section of your html page to
 ## HTML
 
 ### Form
-To use the form validation with a form you need to set the action and method properties of the form and add the `onsubmit` property with the following : `onsubmit="validateForm(event, this)"`
+To use the form validation with a form you need to set the action and method properties of the form and add the `onsubmit` property with the following : 
+```
+onsubmit="validateForm(event, this)"
+```
+You can add a third argument wich is a callback called after display form result in html, this can be done like that : 
+```
+onsubmit="validateForm(event, this, callback)"
+```
+where `callback` is a function name.
 
 ### Field
 To display errors correctly, you need to set and id with the name of the field and '-error' like for example : 
  - `rolNom` errors will be displayed with a class added to the element with id `rolNom-error`
 
 Code example :
-
-    <input type="text" class="form-control" id="rolNom-error" name="rolNom">
+```
+<input type="text" class="form-control" id="rolNom-error" name="rolNom">
+```
 
 ### Display result
 You can create two divs to display the result of the form, one for success and one for error. They must have `form-validation-success` and `form-validation-error` as their id respectively. Example : 
@@ -42,7 +51,9 @@ You can create two divs to display the result of the form, one for success and o
 Create a new instance of the `FormValidator` class with two parameters :
 
  - The first one is the form represented by an instance of the `Form` class. When creating a new instance of form you will need to give the two params arrays, for example : 
- `new  Form(get: $_GET, post: $_POST)`.
+ ```
+ new Form(get: $_GET, post: $_POST)
+ ```
  
  - The second one is the array of `FormParam` passed as a variadic param. Here's an example : 
  ```
@@ -72,6 +83,17 @@ Create a new instance of the `FormValidator` class with two parameters :
 ```
 
 ## Classes
+
+### FormValidator
+The `FormValidator` class constructor params are the following :
+ - `form` [`Form`]: The form to validate
+ - `params` [`array<FormParam>`]: The params to validate the form with (use a variadic param)
+
+You can use the following methods :
+ - `validate` -> `bool`:
+ - `getJson` -> `string`:
+
+You can set the `FormValidator`'s `errorToDisplay` [`string`] to change dynamicly the error message to display. If no custom error message set it will display the html one even if a custom error message has been set during the page execution.
 
 ### FormParam
 The `FormParam` class constructor params are the following :

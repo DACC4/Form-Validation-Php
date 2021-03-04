@@ -5,6 +5,7 @@
         public array $params;
         private bool $validated = false;
         private array $errorsArray = array();
+        public string $errorToDisplay = "";
 
         public function __construct(Form $form, FormParam ...$params){
             $this->form = $form;
@@ -65,11 +66,12 @@
                         //Execute query
                         $query = $sql->prepare($param->sqlQuery);
                         if (str_contains($param->sqlQuery, ':value')) {
-                            $query->bindValue('value', $param->allowedValues);
+                            $query->bindValue('value', $formValue);
                         }
                         $query->execute();
                         $results = $query->fetchAll(PDO::FETCH_NUM);
                         $query->closeCursor();
+
 
                         //Check rows count
                         if (count($results) != 1) {
@@ -116,6 +118,7 @@
         public function getJson() : string{
             return json_encode(array(
                 'errors' => $this->errorsArray,
+                'displayError' => $this->errorToDisplay,
                 'result' => $this->validated
             ));
         }
