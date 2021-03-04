@@ -37,12 +37,12 @@ Code example :
 You can create two divs to display the result of the form, one for success and one for error. They must have `form-validation-success` and `form-validation-error` as their id respectively. Example : 
 
 ```
-<div id="form-validation-success">
-    <div class="alert alert-success">Role saved</div>
+<div id="form-validation-success" class="alert alert-success">
+    Role saved
 </div>
 
-<div id="form-validation-error">
-    <div class="alert alert-danger">Error while saving role</div>
+<div id="form-validation-error" class="alert alert-danger">
+    Error while saving role
 </div>
 ```
 
