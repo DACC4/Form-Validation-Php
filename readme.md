@@ -91,7 +91,7 @@ The `FormValidator` class constructor params are the following :
 
 You can use the following methods :
  - `validate` -> `bool`: This method takes as a param (`supplementaryChecksFunction`) a function that does some checks after the form check, it must return a boolean or it will not be taken into account.
- - `getJson` -> `string`: Get the result of the form validation in json
+ - `getJson` -> `string`: Get the result of the form validation in json format
 
 You can set the `FormValidator`'s `errorToDisplay` [`string`] to change dynamically the error message to display. If no custom error message set it will display the html one even if a custom error message has been set during the page execution.
 
