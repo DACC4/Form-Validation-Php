@@ -8,6 +8,6 @@ $dir = (preg_replace($pattern, $replacement, $url));
 ?>
 
 <!-- Form validation ressources -->
-<link rel="stylesheet" href="<?php echo($dir); ?>/lib/form-validation/form-validation.css">
-<script src="<?php echo($dir); ?>/lib/form-validation/form-validation.js"></script>
+<link rel="stylesheet" href="<?= ($dir); ?>/lib/form-validation/form-validation.css">
+<script src="<?= ($dir); ?>/lib/form-validation/form-validation.js"></script>
 <!-------------------------------->

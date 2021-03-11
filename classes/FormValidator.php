@@ -12,7 +12,7 @@
             $this->params = $params;
         }
 
-        public function validate() : bool{
+        public function validate($supplementaryChecksFunction = null) : bool{
             foreach ($this->params as $param) {
                 /*
                     Check mandatory
@@ -105,6 +105,17 @@
                     default:
                         throw new Exception('Unknown allowed value type (' . $param->name . ')');
                         break;
+                }
+            }
+
+            if (!is_null($supplementaryChecksFunction)) {
+                $checksResult = $supplementaryChecksFunction();
+                if (gettype($checksResult) == 'boolean') {
+                    //Define result
+                    $this->validated = (empty($this->errorsArray) && $checksResult);
+
+                    //Return result
+                    return $this->validated;
                 }
             }
 
