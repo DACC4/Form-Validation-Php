@@ -16,11 +16,11 @@ Add an include or require statement in the `header` section of your html page to
 
 ### Form
 To use the form validation with a form you need to set the action and method properties of the form and add the `onsubmit` property with the following : 
-```
+```js
 onsubmit="validateForm(event, this)"
 ```
 You can add a third argument wich is a callback called after display form result in html, this can be done like that : 
-```
+```js
 onsubmit="validateForm(event, this, callback)"
 ```
 where `callback` is a function name.
@@ -30,14 +30,14 @@ To display errors correctly, you need to set and id with the name of the field a
  - `rolNom` errors will be displayed with a class added to the element with id `rolNom-error`
 
 Code example :
-```
+```html
 <input type="text" class="form-control" id="rolNom-error" name="rolNom">
 ```
 
 ### Display result
 You can create two divs to display the result of the form, one for success and one for error. They must have `form-validation-success` and `form-validation-error` as their id respectively. Example : 
 
-```
+```html
 <div id="form-validation-success" class="alert alert-success">
     Role saved
 </div>
@@ -52,12 +52,12 @@ You can create two divs to display the result of the form, one for success and o
 Create a new instance of the `FormValidator` class with two parameters :
 
  - The first one is the form represented by an instance of the `Form` class. When creating a new instance of form you will need to give the two params arrays, for example : 
- ```
+ ```php
  new Form(get: $_GET, post: $_POST)
  ```
  
  - The second one is the array of `FormParam` passed as a variadic param. Here's an example : 
- ```
+ ```php
  ...array(
     new  FormParam(
         name: 'rolNom',
@@ -133,7 +133,7 @@ The `.env.php` file is used to set the credentials for the database in the case 
 ## Example
 
 Here's a full php code example :
-```
+```php
 $formValidator = new  FormValidator(
 	new  Form(get: $_GET, post: $_POST),
 	...array(
